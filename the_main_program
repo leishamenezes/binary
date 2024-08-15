@@ -1,0 +1,51 @@
+import pickle
+
+def write():
+    f = open("Sample.dat", "wb")
+    record = []
+    while True:
+        rno = int(input("Enter roll number: "))
+        name = input("Enter name: ")
+        grade = input("Enter grade: ")
+        marks = int(input("Enter marks: "))
+        data = [rno, name, grade, marks]
+        record.append(data)
+        ch = input("Do you want to enter more records? (Y/N): ")
+        if ch.lower() == 'n':
+            break
+    pickle.dump(record, f)
+    f.close()
+
+def read():
+    f = open("Sample.dat", "rb")
+    record = pickle.load(f)
+    print(record)
+    for i in record:
+        rno = i[0]
+        name = i[1]
+        grade = i[2]
+        marks = i[3]
+        print(rno, name, grade, marks)
+    f.close()
+
+def update():
+    f = open("Sample.dat", "rb+")
+    record = pickle.load(f)
+    found = 0
+    rno = int(input("Enter roll number whose record you want to update: "))
+    for i in record:
+        if i[0] == rno:
+            print("Current name:", i[1])
+            i[1] = input("Enter updated name: ")
+            found = 1
+            break
+    if found == 0:
+        print("Record not found")
+    else:
+        f.seek(0)
+        pickle.dump(record, f)
+    f.close()
+
+write()
+read()
+update()
