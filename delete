@@ -1,0 +1,44 @@
+import pickle
+
+def write():
+    f = open("Student.dat", "wb")
+    record = []
+    while True:
+        rno = int(input("Enter roll number: "))
+        name = input("Enter name: ")
+        grade = input("Enter grade: ")
+        marks = int(input("Enter marks: "))
+        data = [rno, name, grade, marks]
+        record.append(data)
+        ch = input("Do you want to enter more records? (Y/N): ")
+        if ch.lower() == 'n':
+            break
+    pickle.dump(record, f)
+    f.close()
+
+def read():
+    f = open("Student.dat", "rb")
+    record = pickle.load(f)
+    print(record)
+    for i in record:
+        rno = i[0]
+        name = i[1]
+        marks = i[2]
+        print(rno, name, marks)
+    f.close()
+
+def delete():
+    f = open("Student.dat", "rb+")
+    record = pickle.load(f)
+    f.close()
+    
+    rno = int(input("Enter roll number to delete: "))
+    record = [i for i in record if i[0] != rno]
+    
+    f = open("Student.dat", "wb")
+    pickle.dump(record, f)
+    f.close()
+write()
+read()
+delete()
+read()
