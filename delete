@@ -29,16 +29,20 @@ def read():
 
 def delete():
     f = open("Student.dat", "rb+")
-    record = pickle.load(f)
+    s = pickle.load(f)
     f.close()
     
-    rno = int(input("Enter roll number to delete: "))
-    record = [i for i in record if i[0] != rno]
-    
+    r = int(input("Enter roll number to delete: "))
     f = open("Student.dat", "wb")
-    pickle.dump(record, f)
-    f.close()
+    recls=[]
+    for i in s:
+        if i[0]==r:
+            continue
+        recls.append(i)
+        pickle.dump(recls, f)
+        f.close()
 write()
 read()
 delete()
 read()
+
